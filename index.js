@@ -1,13 +1,33 @@
-let array = [];
-let arrayUUID = [];
+let objArray = [];
 
-function randomNumber() {
-    return Math.floor(Math.random() * 1000) + 1;
+function createObject() {
+    let arr 
+        arr = {
+            number:randomNumber(),
+            id: createUUID()
+        }
+   return arr 
 }
 
 function addElement() {
-    array.push(randomNumber());
-    arrayUUID.push(create_UUID());
+    objArray.push(createObject())
+}
+
+function sortObjectArray(array,prop) {
+    for(let i = 0; i < array.length; i ++) {
+        for(let j = 0; j < array.length-1; j++) {
+            if(array[j][prop] > array[j + 1][prop]) {
+                let x = array[j][prop];
+                array[j][prop] = array[j + 1][prop];
+                array[j + 1][prop] = x;
+            }
+        } 
+    }
+}
+
+
+function randomNumber() {
+    return Math.floor(Math.random() * 1000) + 1;
 }
 
 function addDiv(number,id) {
@@ -26,8 +46,8 @@ function addDiv(number,id) {
     img.style.position = "relative";
     img.style.left = "60px";
     img.style.top = "-32px";
-    img.src="icon.2.png";
-    img.onclick = (event)=>{
+    img.src = "icon.2.png";
+    img.onclick = (event) => {
         removeCard(event);
     }
 }
@@ -36,7 +56,7 @@ function removeCard(event) {
     event.target.parentElement.remove()
 } 
 
-function create_UUID() {
+function createUUID() {
     var dt = new Date().getTime();
     var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
         var r = (dt + Math.random()*16) % 16 | 0;
@@ -45,29 +65,29 @@ function create_UUID() {
     });
     return uuid;
 }
- 
+
 function addCard() {
     addElement();
-    addDiv(array[array.length-1]);
+    addDiv(objArray[objArray.length-1].number,objArray[objArray.length-1].id); 
 }
 
 function sortCards() {
-    sortArray(array)
+    sortObjectArray(objArray,'number')
     removeCards();
     draw();
 }
 
-function sortArray(array) {
-    for(let i = 0; i < array.length; i ++) {
-        for(let j = 0; j < array.length; j++) {
-            if(array[j] > array[j + 1]) {
-                let x = array[j];
-                array[j] = array[j + 1];
-                array[j + 1] = x;
-            }
-        } 
-    }
-}
+// function sortArray(array) {
+//     for(let i = 0; i < array.length; i ++) {
+//         for(let j = 0; j < array.length; j++) {
+//             if(array[j] > array[j + 1]) {
+//                 let x = array[j];
+//                 array[j] = array[j + 1];
+//                 array[j + 1] = x;
+//             }
+//         } 
+//     }
+// }
 
 function removeCards() {
     let a = document.getElementById("container");
@@ -75,7 +95,8 @@ function removeCards() {
 }
 
 function draw() {
-    for(let i = 0; i < array.length; i ++) {
-        addDiv(array[i],arrayUUID[i]);
+    
+    for(let i = 0; i < objArray.length; i ++) {
+        addDiv(objArray[i].number,objArray[i].id);
     }
 }
