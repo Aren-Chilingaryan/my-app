@@ -1,16 +1,11 @@
 let objArray = [];
 
-function createObject() {
-    let arr;
-    arr = {
-        number: randomNumber(),
+function addElement() {
+    const object = {
+        number: randomNumber(200, 5),
         id: createUUID()
     }
-    return arr;
-}
-
-function addElement() {
-    objArray.push(createObject());
+    objArray.push(object);
 }
 
 function sortObjectArray(array, prop) {
@@ -25,14 +20,12 @@ function sortObjectArray(array, prop) {
     }
 }
 
-
-function randomNumber() {
-    return Math.floor(Math.random() * 1000) + 1;
+function randomNumber(max, min) {
+    return Math.floor(Math.random() * (max - min) + min);
 }
 
 function addDiv(number, id) {
     let newDiv = document.createElement("div");
-    document.getElementById("container").appendChild(newDiv);
     newDiv.style.width = "100px";
     newDiv.style.height = "30px";
     newDiv.style.margin = "30px";
@@ -41,13 +34,15 @@ function addDiv(number, id) {
     newDiv.style.textAlign = "center";
     newDiv.innerText = number;
     newDiv.id = id;
-    let img = document.createElement("img");
-    newDiv.appendChild(img);
-    img.style.position = "relative";
-    img.style.left = "60px";
-    img.style.top = "-32px";
-    img.src = "icon.2.png";
-    img.onclick = (event) => {
+    document.getElementById("container").appendChild(newDiv);
+    let icon = document.createElement("img");
+    icon.style.position = "relative";
+    icon.style.left = "60px";
+    icon.style.top = "-32px";
+    icon.src = "icon.2.png";
+    newDiv.appendChild(icon);
+
+    icon.onclick = (event) => {
         removeCard(event);
     }
 }
@@ -78,12 +73,11 @@ function sortCards() {
 }
 
 function removeCards() {
-    let a = document.getElementById("container");
-    a.innerHTML = "";
+    const container = document.getElementById("container");
+    container.innerHTML = "";
 }
 
 function draw() {
-
     for (let i = 0; i < objArray.length; i++) {
         addDiv(objArray[i].number, objArray[i].id);
     }
